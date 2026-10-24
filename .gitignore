@@ -1,0 +1,27 @@
+# Python bytecode and virtual environment
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# MLflow and DVC local cache
+mlruns/
+.dvc/cache/
+.dvc/tmp/
+
+# Data and model artifacts (tracked via DVC, not Git)
+data/raw/*
+data/processed/*
+models/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+
+# Environment secrets and system files
+.env
+.DS_Store
+.pytest_cache/
+reports/figures/*
+!reports/figures/.gitkeep

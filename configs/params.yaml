@@ -1,0 +1,49 @@
+base:
+  random_state: 42
+  target_col: "aqi"
+
+data_source:
+  n_samples: 3500
+  raw_path: "data/raw/air_quality_raw.csv"
+
+preprocess:
+  test_size: 0.2
+  val_size: 0.1
+  processed_train_path: "data/processed/train.parquet"
+  processed_val_path: "data/processed/val.parquet"
+  processed_test_path: "data/processed/test.parquet"
+  preprocessor_path: "models/preprocessor.pkl"
+
+features:
+  pollutants:
+    - "pm2_5"
+    - "pm10"
+    - "no2"
+    - "so2"
+    - "co"
+  weather:
+    - "temperature"
+    - "humidity"
+    - "wind_speed"
+
+models:
+  linear_regression:
+    fit_intercept: true
+  random_forest:
+    n_estimators: 150
+    max_depth: 12
+    min_samples_split: 4
+  xgboost:
+    n_estimators: 150
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+train:
+  selected_model_path: "models/best_model.pkl"
+  model_metadata_path: "models/model_metadata.json"
+
+evaluate:
+  metrics_path: "reports/model_metrics.json"
+  figures_dir: "reports/figures"

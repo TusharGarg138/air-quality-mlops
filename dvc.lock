@@ -1,0 +1,118 @@
+schema: '2.0'
+stages:
+  validate_data:
+    cmd: python -m src.data.validate
+    deps:
+    - path: configs/params.yaml
+      hash: md5
+      md5: bc2a246751bad85b659be65c21ff50dd
+      size: 1024
+    - path: data/raw/air_quality_raw.csv
+      hash: md5
+      md5: 3ba3bd9105a009d098d25e89cdb188b3
+      size: 177623
+    - path: src/data/validate.py
+      hash: md5
+      md5: 3007082f5edd2d245dde303a6828068d
+      size: 1670
+    outs:
+    - path: reports/data_validation_report.json
+      hash: md5
+      md5: 26790df94b7cb53883fda18314dff172
+      size: 424
+  preprocess:
+    cmd: python -m src.features.preprocess
+    deps:
+    - path: configs/params.yaml
+      hash: md5
+      md5: bc2a246751bad85b659be65c21ff50dd
+      size: 1024
+    - path: data/raw/air_quality_raw.csv
+      hash: md5
+      md5: 3ba3bd9105a009d098d25e89cdb188b3
+      size: 177623
+    - path: src/features/preprocess.py
+      hash: md5
+      md5: 7ea0ad33fda44e1a876ee425db04471b
+      size: 2196
+    outs:
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: 21b8558ca49769851afaccff41cda98c
+      size: 34084
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: d7c9644ead40451744c908f88e678c15
+      size: 87961
+    - path: data/processed/val.parquet
+      hash: md5
+      md5: 781691b42423d15d196992384ef6d892
+      size: 21182
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: a4c5e78c1d428b145c446041a788efc5
+      size: 1196
+  train:
+    cmd: python -m src.training.train
+    deps:
+    - path: configs/params.yaml
+      hash: md5
+      md5: bc2a246751bad85b659be65c21ff50dd
+      size: 1024
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: d7c9644ead40451744c908f88e678c15
+      size: 87961
+    - path: data/processed/val.parquet
+      hash: md5
+      md5: 781691b42423d15d196992384ef6d892
+      size: 21182
+    - path: src/training/train.py
+      hash: md5
+      md5: 01edcd784076b015a6a47b8677a8028b
+      size: 4301
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: d476866796ade039352b8c8ea4f8182f
+      size: 11281436
+    - path: models/model_metadata.json
+      hash: md5
+      md5: dcc3dd61cf1f008eaeb19012288c0635
+      size: 370
+  evaluate:
+    cmd: python -m src.training.evaluate
+    deps:
+    - path: configs/params.yaml
+      hash: md5
+      md5: bc2a246751bad85b659be65c21ff50dd
+      size: 1024
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: 21b8558ca49769851afaccff41cda98c
+      size: 34084
+    - path: models/best_model.pkl
+      hash: md5
+      md5: d476866796ade039352b8c8ea4f8182f
+      size: 11281436
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: a4c5e78c1d428b145c446041a788efc5
+      size: 1196
+    - path: src/training/evaluate.py
+      hash: md5
+      md5: 67f60b6679d9711c200fd86624b8b274
+      size: 2804
+    outs:
+    - path: reports/figures/actual_vs_predicted.png
+      hash: md5
+      md5: aafcce214c58403d756f6d2792471143
+      size: 49828
+    - path: reports/figures/residuals.png
+      hash: md5
+      md5: b6b4c5c8ae03da91c05b9fd12b1e19d2
+      size: 38811
+    - path: reports/model_metrics.json
+      hash: md5
+      md5: 45e856c274aa17072ba6e8b37580bc83
+      size: 107

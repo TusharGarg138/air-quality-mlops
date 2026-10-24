@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Predictor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0fdf4;
+            color: #1f2937;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .card {
+            background: #ffffff;
+            max-width: 650px;
+            width: 100%;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0f766e; margin-top: 0; font-size: 1.5rem; }
+        p.subtitle { color: #4b5563; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem; }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.6rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            background: #0d9488;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+        button:hover { background: #0f766e; }
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            background: #e6fffa;
+            border: 1px solid #38b2ac;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Air Quality Index (AQI) Predictor</h1>
+    <p class="subtitle">Enter real-time environmental measurements to compute CPCB AQI.</p>
+    <form id="aqiForm">
+        <div class="grid">
+            <div><label>PM2.5 (ug/m3)</label><input type="number" step="0.1" id="pm2_5" value="45.0" required></div>
+            <div><label>PM10 (ug/m3)</label><input type="number" step="0.1" id="pm10" value="95.0" required></div>
+            <div><label>NO2 (ug/m3)</label><input type="number" step="0.1" id="no2" value="25.0" required></div>
+            <div><label>SO2 (ug/m3)</label><input type="number" step="0.1" id="so2" value="12.0" required></div>
+            <div><label>CO (mg/m3)</label><input type="number" step="0.1" id="co" value="0.9" required></div>
+            <div><label>Temperature (°C)</label><input type="number" step="0.1" id="temperature" value="29.0" required></div>
+            <div><label>Humidity (%)</label><input type="number" step="0.1" id="humidity" value="60.0" required></div>
+            <div><label>Wind Speed (km/h)</label><input type="number" step="0.1" id="wind_speed" value="3.5" required></div>
+        </div>
+        <button type="submit">Predict Air Quality</button>
+    </form>
+    <div id="result" class="result-box">
+        <h3>Estimated AQI: <span id="aqiVal"></span></h3>
+        <p>Category: <strong id="catVal"></strong></p>
+        <p style="font-size: 0.8rem; color: #4b5563;">Model: <span id="modelVal"></span></p>
+    </div>
+</div>
+<script>
+document.getElementById('aqiForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        pm2_5: parseFloat(document.getElementById('pm2_5').value),
+        pm10: parseFloat(document.getElementById('pm10').value),
+        no2: parseFloat(document.getElementById('no2').value),
+        so2: parseFloat(document.getElementById('so2').value),
+        co: parseFloat(document.getElementById('co').value),
+        temperature: parseFloat(document.getElementById('temperature').value),
+        humidity: parseFloat(document.getElementById('humidity').value),
+        wind_speed: parseFloat(document.getElementById('wind_speed').value),
+    };
+    const res = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('aqiVal').innerText = data.predicted_aqi;
+    document.getElementById('catVal').innerText = data.category;
+    document.getElementById('modelVal').innerText = data.model_version;
+});
+</script>
+</body>
+</html>

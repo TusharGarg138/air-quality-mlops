@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dvc
+.dvcignore
+venv/
+.venv/
+mlruns/
+.pytest_cache/
+tests/
+reports/figures/
+*.md
