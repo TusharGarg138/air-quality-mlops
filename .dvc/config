@@ -1,4 +1,7 @@
 [core]
-    remote = mylocalremote
+    remote = s3remote
 ['remote "mylocalremote"']
     url = /tmp/dvc-storage
+['remote "s3remote"']
+    url = s3://aqi-mlops-bucket-2026-607570804718-ap-south-1-an/dvcstore
+    region = ap-south-1
