@@ -83,7 +83,17 @@ def train_models(config_path: str = "configs/params.yaml"):
             if mlflow is not None:
                 mlflow.log_params(model.get_params())
                 mlflow.log_metrics({"val_mae": mae, "val_rmse": rmse, "val_r2": r2, "train_time_sec": duration})
-                mlflow.sklearn.log_model(model, artifact_path=name)
+                trusted_types = ["sklearn.tree._tree.Tree"]
+                if name == "XGBoost":
+                    trusted_types.extend([
+                        "xgboost.core.Booster",
+                        "xgboost.sklearn.XGBRegressor",
+                    ])
+                mlflow.sklearn.log_model(
+                    model,
+                    name=name,
+                    skops_trusted_types=trusted_types
+                )
 
             results[name] = {
                 "model_obj": model,

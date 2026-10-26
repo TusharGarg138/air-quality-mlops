@@ -1,6 +1,6 @@
 {
-  "test_mae": 1.136,
-  "test_rmse": 3.815,
+  "test_mae": 1.124,
+  "test_rmse": 3.768,
   "test_r2": 0.996,
   "evaluated_model": "RandomForest"
 }

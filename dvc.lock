@@ -5,7 +5,7 @@ stages:
     deps:
     - path: configs/params.yaml
       hash: md5
-      md5: bc2a246751bad85b659be65c21ff50dd
+      md5: e5cee26c667a14ff24665de6aba76967
       size: 1024
     - path: data/raw/air_quality_raw.csv
       hash: md5
@@ -25,7 +25,7 @@ stages:
     deps:
     - path: configs/params.yaml
       hash: md5
-      md5: bc2a246751bad85b659be65c21ff50dd
+      md5: e5cee26c667a14ff24665de6aba76967
       size: 1024
     - path: data/raw/air_quality_raw.csv
       hash: md5
@@ -38,16 +38,16 @@ stages:
     outs:
     - path: data/processed/test.parquet
       hash: md5
-      md5: 21b8558ca49769851afaccff41cda98c
-      size: 34084
+      md5: 0fe37faf9847b7c144ef6bede9639543
+      size: 34167
     - path: data/processed/train.parquet
       hash: md5
-      md5: d7c9644ead40451744c908f88e678c15
-      size: 87961
+      md5: 3a2c9d7a197f7a50cefc423d045d9022
+      size: 87964
     - path: data/processed/val.parquet
       hash: md5
-      md5: 781691b42423d15d196992384ef6d892
-      size: 21182
+      md5: 4e4f461d5666278f617cf0d68327fb29
+      size: 21283
     - path: models/preprocessor.pkl
       hash: md5
       md5: a4c5e78c1d428b145c446041a788efc5
@@ -57,44 +57,44 @@ stages:
     deps:
     - path: configs/params.yaml
       hash: md5
-      md5: bc2a246751bad85b659be65c21ff50dd
+      md5: e5cee26c667a14ff24665de6aba76967
       size: 1024
     - path: data/processed/train.parquet
       hash: md5
-      md5: d7c9644ead40451744c908f88e678c15
-      size: 87961
+      md5: 3a2c9d7a197f7a50cefc423d045d9022
+      size: 87964
     - path: data/processed/val.parquet
       hash: md5
-      md5: 781691b42423d15d196992384ef6d892
-      size: 21182
+      md5: 4e4f461d5666278f617cf0d68327fb29
+      size: 21283
     - path: src/training/train.py
       hash: md5
-      md5: 01edcd784076b015a6a47b8677a8028b
-      size: 4301
+      md5: 887452d76f2ff555248aefa2296427fa
+      size: 4683
     outs:
     - path: models/best_model.pkl
       hash: md5
-      md5: d476866796ade039352b8c8ea4f8182f
-      size: 11281436
+      md5: 62dc4241f946b7dd28316e61b1553ec5
+      size: 15064250
     - path: models/model_metadata.json
       hash: md5
-      md5: dcc3dd61cf1f008eaeb19012288c0635
+      md5: 2e6997c4c500889766744445a0951e9a
       size: 370
   evaluate:
     cmd: python -m src.training.evaluate
     deps:
     - path: configs/params.yaml
       hash: md5
-      md5: bc2a246751bad85b659be65c21ff50dd
+      md5: e5cee26c667a14ff24665de6aba76967
       size: 1024
     - path: data/processed/test.parquet
       hash: md5
-      md5: 21b8558ca49769851afaccff41cda98c
-      size: 34084
+      md5: 0fe37faf9847b7c144ef6bede9639543
+      size: 34167
     - path: models/best_model.pkl
       hash: md5
-      md5: d476866796ade039352b8c8ea4f8182f
-      size: 11281436
+      md5: 62dc4241f946b7dd28316e61b1553ec5
+      size: 15064250
     - path: models/preprocessor.pkl
       hash: md5
       md5: a4c5e78c1d428b145c446041a788efc5
@@ -106,13 +106,13 @@ stages:
     outs:
     - path: reports/figures/actual_vs_predicted.png
       hash: md5
-      md5: aafcce214c58403d756f6d2792471143
-      size: 49828
+      md5: 8b7d3f0d7c078e934816b9fff1e6f985
+      size: 47921
     - path: reports/figures/residuals.png
       hash: md5
-      md5: b6b4c5c8ae03da91c05b9fd12b1e19d2
-      size: 38811
+      md5: 0b7be311b1d1db0888e056296212b8ac
+      size: 37306
     - path: reports/model_metrics.json
       hash: md5
-      md5: 45e856c274aa17072ba6e8b37580bc83
+      md5: e6e4112a3833d24b2710ad8d63e3ecbb
       size: 107

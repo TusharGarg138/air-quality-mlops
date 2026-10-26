@@ -30,7 +30,7 @@ models:
   linear_regression:
     fit_intercept: true
   random_forest:
-    n_estimators: 150
+    n_estimators: 200
     max_depth: 12
     min_samples_split: 4
   xgboost:
